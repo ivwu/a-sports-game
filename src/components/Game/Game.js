@@ -4,19 +4,19 @@ import Scoreboard from "../Scoreboard/Scoreboard";
 import "./Game.css";
 
 class Game extends Component {
+  // declare states --- lift the states from team "up" to Game and have Game component be the "soure of the truth" for the scores so that reset can be calculated
   constructor(props) {
     super(props);
     this.state = {
       homeScore: 0,
       homeShots: 0,
-      homeShotPercentage: 0,
       visitingScore: 0,
       visitingShots: 0,
-      visitingShotPercentage: 0,
       resetCounter: 0,
     };
   }
 
+  // create method to pass a props to the Team component for when the home team shoots--- need to be differenciated since they are different instances
   onHomeShoot = () => {
     this.setState((currentState) => {
       console.log(currentState);
@@ -29,7 +29,8 @@ class Game extends Component {
       return {
         homeShots: newShots,
         homeScore: newScore,
-        homeShotPercentage: ((newScore / newShots) * 100).toFixed(0) + "%",
+        // dont need to store percentage as state bc it can be calculated using the already stored states
+        // homeShotPercentage: ((newScore / newShots) * 100).toFixed(0),
       };
     });
   };
@@ -46,86 +47,74 @@ class Game extends Component {
       return {
         visitingShots: newShots,
         visitingScore: newScore,
-        visitingShotPercentage: ((newScore / newShots) * 100).toFixed(0) + "%",
+        // visitingShotPercentage: ((newScore / newShots) * 100).toFixed(0),
       };
     });
   };
 
+  // method for when reset is clicked, changes score states to be 0 and increments resetCounter by 1
   handleReset = () => {
     this.setState((currentState) => {
       return {
         resetCounter: currentState.resetCounter + 1,
         homeScore: 0,
         homeShots: 0,
-        homeShotPercentage: 0,
+        // homeShotPercentage: 0,
         visitingScore: 0,
         visitingShots: 0,
-        visitingShotPercentage: 0,
+        // visitingShotPercentage: 0,
       };
     });
   };
 
   render() {
-    const raccoons = {
-      name: "Russiaville Raccoons",
-      logoSrc:
-        "https://raw.githubusercontent.com/p-mayor/davey-react-sports-lab-basic/master/assets/images/raccoon.png",
-    };
-
-    const squirrels = {
-      name: "Sheridan Squirrels",
-      logoSrc:
-        "https://raw.githubusercontent.com/p-mayor/davey-react-sports-lab-basic/master/assets/images/squirrel.png",
-    };
-
-    // const bunnies = {
-    //   name: "Burlington Bunnies",
-    //   logoSrc:
-    //     "https://raw.githubusercontent.com/p-mayor/davey-react-sports-lab-basic/master/assets/images/bunny.png",
-    // };
-
-    // const hounds = {
-    //   name: "Hammond Hounds",
-    //   logoSrc:
-    //     "https://raw.githubusercontent.com/p-mayor/davey-react-sports-lab-basic/master/assets/images/hound.png",
-    // };
     const {
       homeScore,
       homeShots,
-      homeShotPercentage,
+      // homeShotPercentage,
       visitingScore,
       visitingShots,
-      visitingShotPercentage,
+      // visitingShotPercentage,
       resetCounter,
     } = this.state;
+
+    const { venue, team1, team2 } = this.props;
+
+    const resetImage =
+      "https://thumbs.dreamstime.com/b/vs-letters-versus-logo-vector-sign-isolated-transparent-background-152594029.jpg";
     return (
       <>
         <Scoreboard visitors={visitingScore} home={homeScore} />
-        <h1 className="welcome">Welcome to {this.props.venue}</h1>{" "}
+        <h1 className="welcome">Welcome to {venue}</h1>{" "}
         <div className="row">
-          <p className="stats">
+          <p className="stats team">
             <Team
               score={homeScore}
               shots={homeShots}
-              shotPercentage={homeShotPercentage}
+              shotPercentage={((homeScore / homeShots) * 100).toFixed(0)}
               className="Team"
-              name={this.props.team1.name}
-              logo={raccoons.logoSrc}
+              name={team1.name}
+              logo={team1.logoSrc}
               onShootChange={this.onHomeShoot}
             />
           </p>
           <p className="stats reset">
+            <img src={resetImage} alt="resetImage(vs)" />
             Resets: {resetCounter}
-            <button onClick={this.handleReset}>RESET GAME</button>
+            <button className="myButton" onClick={this.handleReset}>
+              RESET GAME
+            </button>
           </p>
-          <p className="stats">
+          <p className="stats team">
             <Team
               score={visitingScore}
               shots={visitingShots}
-              shotPercentage={visitingShotPercentage}
+              shotPercentage={((visitingScore / visitingShots) * 100).toFixed(
+                0
+              )}
               className="Team"
-              name={this.props.team2.name}
-              logo={squirrels.logoSrc}
+              name={team2.name}
+              logo={team2.logoSrc}
               onShootChange={this.onVisitingShoot}
             />
           </p>

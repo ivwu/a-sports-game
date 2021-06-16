@@ -10,3 +10,8 @@
   padding: 1em;
   border: solid;
 }
+
+.scoreboard-container {
+  background-color: rgb(80, 20, 20);
+  color: rgb(223, 174, 85);
+}

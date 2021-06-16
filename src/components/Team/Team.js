@@ -11,6 +11,7 @@ class Team extends Component {
   //   };
   // }
 
+  // handleClick needs to be made to pass in a prop because now the functionallty/states are being lifted to parent component (Game) so each functionality will be passed in thru props within the parent
   handleClick = () => {
     // this.setState((currentState) => {
     //   console.log(currentState);
@@ -37,8 +38,10 @@ class Team extends Component {
         <img src={logo} alt={name} />
         <p>Shots: {shots}</p>
         <p>Score: {score}</p>
-        {shots === 0 ? <> </> : <p>Shot Percentage: {shotPercentage}</p>}
-        <button onClick={this.handleClick}>SHOOT!</button>
+        {shots === 0 ? <> </> : <p>Shooting %: {shotPercentage}</p>}
+        <button className="myButton" onClick={this.handleClick}>
+          SHOOT!
+        </button>
       </div>
     );
   }

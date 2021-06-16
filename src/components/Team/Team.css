@@ -10,4 +10,9 @@
 
 img {
   width: 250px;
+  height: 300px;
+}
+
+.Team-container {
+  text-align: center;
 }
