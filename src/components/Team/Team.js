@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Team.css";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 class Team extends Component {
   // constructor(props) {
@@ -34,19 +34,37 @@ class Team extends Component {
   render() {
     const { name, logo, shots, score, shotPercentage } = this.props;
     return (
-      <div className="Team-container">
-        <h1>{name}</h1>
-        <img src={logo} alt={name} />
-        <p>Shots: {shots}</p>
-        <p>Score: {score}</p>
-        {shots === 0 ? <> </> : <p>Shooting %: {shotPercentage}</p>}
-        {/* <button className="myButton" onClick={this.handleClick}>
-          SHOOT!
-        </button> */}
-        <Button variant="warning" onClick={this.handleClick}>
-          SHOOT!
-        </Button>
-      </div>
+      <Card className="text-center" style={{ width: "18rem" }}>
+        <Card.Title>{name}</Card.Title>
+        <Card.Img variant="top" src={logo} alt={name} />
+        <Card.Body>
+          <Card.Text>
+            <p>Shots: {shots}</p>
+            <p>Score: {score}</p>
+            {shots === 0 ? <> </> : <p>Shooting %: {shotPercentage}</p>}
+          </Card.Text>
+          <Button
+            variant="warning"
+            // className="text-center"
+            onClick={this.handleClick}
+          >
+            SHOOT!
+          </Button>
+        </Card.Body>
+      </Card>
+      // <div className="Team-container">
+      //   <h1>{name}</h1>
+      //   <img src={logo} alt={name} />
+      // <p>Shots: {shots}</p>
+      // <p>Score: {score}</p>
+      // {shots === 0 ? <> </> : <p>Shooting %: {shotPercentage}</p>}
+      //   {/* <button className="myButton" onClick={this.handleClick}>
+      //     SHOOT!
+      //   </button> */}
+      //   <Button variant="warning" onClick={this.handleClick}>
+      //     SHOOT!
+      //   </Button>
+      // </div>
     );
   }
 }

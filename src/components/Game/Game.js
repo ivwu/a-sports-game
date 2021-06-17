@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Team from "../Team/Team";
 import Scoreboard from "../Scoreboard/Scoreboard";
 import "./Game.css";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 class Game extends Component {
   // declare states --- lift the states from team "up" to Game and have Game component be the "soure of truth" for the scores so that reset can be calculated
@@ -116,6 +116,19 @@ class Game extends Component {
               onShootChange={() => this.onShoot("homeShots", "homeScore")}
             />
           </p>
+          {/* <Card style={{ width: "18rem" }}>
+            <Card.Img variant="top" src={resetImage} alt="resetImage(vs)" />
+            <Card.Body>
+              <Card.Title>Resets: {resetCounter}</Card.Title>
+              <Card.Text>
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </Card.Text>
+              <Button onClick={this.handleReset} variant="warning">
+                RESET GAME
+              </Button>{" "}
+            </Card.Body>
+          </Card> */}
           <p className="stats reset">
             <img src={resetImage} alt="resetImage(vs)" />
             Resets: {resetCounter}
