@@ -4,7 +4,7 @@ import Scoreboard from "../Scoreboard/Scoreboard";
 import "./Game.css";
 
 class Game extends Component {
-  // declare states --- lift the states from team "up" to Game and have Game component be the "soure of the truth" for the scores so that reset can be calculated
+  // declare states --- lift the states from team "up" to Game and have Game component be the "soure of truth" for the scores so that reset can be calculated
   constructor(props) {
     super(props);
     this.state = {
@@ -16,38 +16,57 @@ class Game extends Component {
     };
   }
 
-  // create method to pass a props to the Team component for when the home team shoots--- need to be differenciated since they are different instances
-  onHomeShoot = () => {
+  // create method to pass props to the Team component for when the home team shoots--- need to be differenciated since they are different instances
+
+  // onHomeShoot = () => {
+  //   this.setState((currentState) => {
+  //     console.log(currentState);
+  //     let randomShots = Math.floor(Math.random() * (3 - 1) + 1);
+
+  //     let randomScore = Math.floor(Math.random() * (randomShots - 1) + 1);
+
+  //     let newShots = currentState.homeShots + randomShots;
+  //     let newScore = currentState.homeScore + randomScore;
+  //     return {
+  //       homeShots: newShots,
+  //       homeScore: newScore,
+  //       // dont need to store percentage as state bc it can be calculated using the already stored states
+  //       // homeShotPercentage: ((newScore / newShots) * 100).toFixed(0),
+  //     };
+  //   });
+  // };
+
+  // onVisitingShoot = () => {
+  //   this.setState((currentState) => {
+  //     console.log(currentState);
+  //     let randomShots = Math.floor(Math.random() * (3 - 1) + 1);
+
+  //     let randomScore = Math.floor(Math.random() * (randomShots - 1) + 1);
+
+  //     let newShots = currentState.visitingShots + randomShots;
+  //     let newScore = currentState.visitingScore + randomScore;
+  //     return {
+  //       visitingShots: newShots,
+  //       visitingScore: newScore,
+  //       // visitingShotPercentage: ((newScore / newShots) * 100).toFixed(0),
+  //     };
+  //   });
+  // };
+
+  //refactored above methods to be one function - onShoot, takes in parameters and changes states based on what is passed in
+
+  onShoot = (shots, score) => {
     this.setState((currentState) => {
       console.log(currentState);
       let randomShots = Math.floor(Math.random() * (3 - 1) + 1);
 
       let randomScore = Math.floor(Math.random() * (randomShots - 1) + 1);
 
-      let newShots = currentState.homeShots + randomShots;
-      let newScore = currentState.homeScore + randomScore;
+      let newShots = currentState[shots] + randomShots;
+      let newScore = currentState[score] + randomScore;
       return {
-        homeShots: newShots,
-        homeScore: newScore,
-        // dont need to store percentage as state bc it can be calculated using the already stored states
-        // homeShotPercentage: ((newScore / newShots) * 100).toFixed(0),
-      };
-    });
-  };
-
-  onVisitingShoot = () => {
-    this.setState((currentState) => {
-      console.log(currentState);
-      let randomShots = Math.floor(Math.random() * (3 - 1) + 1);
-
-      let randomScore = Math.floor(Math.random() * (randomShots - 1) + 1);
-
-      let newShots = currentState.visitingShots + randomShots;
-      let newScore = currentState.visitingScore + randomScore;
-      return {
-        visitingShots: newShots,
-        visitingScore: newScore,
-        // visitingShotPercentage: ((newScore / newShots) * 100).toFixed(0),
+        [shots]: newShots,
+        [score]: newScore,
       };
     });
   };
@@ -59,10 +78,8 @@ class Game extends Component {
         resetCounter: currentState.resetCounter + 1,
         homeScore: 0,
         homeShots: 0,
-        // homeShotPercentage: 0,
         visitingScore: 0,
         visitingShots: 0,
-        // visitingShotPercentage: 0,
       };
     });
   };
@@ -95,7 +112,7 @@ class Game extends Component {
               className="Team"
               name={team1.name}
               logo={team1.logoSrc}
-              onShootChange={this.onHomeShoot}
+              onShootChange={() => this.onShoot("homeShots", "homeScore")}
             />
           </p>
           <p className="stats reset">
@@ -115,7 +132,9 @@ class Game extends Component {
               className="Team"
               name={team2.name}
               logo={team2.logoSrc}
-              onShootChange={this.onVisitingShoot}
+              onShootChange={() =>
+                this.onShoot("visitingShots", "visitingScore")
+              }
             />
           </p>
         </div>
