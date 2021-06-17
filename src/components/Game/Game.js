@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Team from "../Team/Team";
 import Scoreboard from "../Scoreboard/Scoreboard";
 import "./Game.css";
+import { Button } from "react-bootstrap";
 
 class Game extends Component {
   // declare states --- lift the states from team "up" to Game and have Game component be the "soure of truth" for the scores so that reset can be calculated
@@ -118,9 +119,12 @@ class Game extends Component {
           <p className="stats reset">
             <img src={resetImage} alt="resetImage(vs)" />
             Resets: {resetCounter}
-            <button className="myButton" onClick={this.handleReset}>
+            {/* <button className="myButton" onClick={this.handleReset}>
               RESET GAME
-            </button>
+            </button> */}
+            <Button onClick={this.handleReset} variant="warning">
+              RESET GAME
+            </Button>{" "}
           </p>
           <p className="stats team">
             <Team

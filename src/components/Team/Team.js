@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Team.css";
+import { Button } from "react-bootstrap";
 
 class Team extends Component {
   // constructor(props) {
@@ -39,9 +40,12 @@ class Team extends Component {
         <p>Shots: {shots}</p>
         <p>Score: {score}</p>
         {shots === 0 ? <> </> : <p>Shooting %: {shotPercentage}</p>}
-        <button className="myButton" onClick={this.handleClick}>
+        {/* <button className="myButton" onClick={this.handleClick}>
           SHOOT!
-        </button>
+        </button> */}
+        <Button variant="warning" onClick={this.handleClick}>
+          SHOOT!
+        </Button>
       </div>
     );
   }
