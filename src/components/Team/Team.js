@@ -32,9 +32,10 @@ class Team extends Component {
   };
 
   render() {
-    const { name, logo, shots, score, shotPercentage } = this.props;
+    const { name, logo, shots, score, shotPercentage, hello } = this.props;
     return (
       <Card className="text-center" style={{ width: "18rem" }}>
+        {hello ? <p>Hello World</p> : <></>}
         <Card.Title>{name}</Card.Title>
         <Card.Img variant="top" src={logo} alt={name} />
         <Card.Body>

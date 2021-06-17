@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Team from "../Team/Team";
 import Scoreboard from "../Scoreboard/Scoreboard";
 import "./Game.css";
-import { Button, Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class Game extends Component {
   // declare states --- lift the states from team "up" to Game and have Game component be the "soure of truth" for the scores so that reset can be calculated
@@ -14,6 +14,7 @@ class Game extends Component {
       visitingScore: 0,
       visitingShots: 0,
       resetCounter: 0,
+      hello: false,
     };
   }
 
@@ -85,6 +86,15 @@ class Game extends Component {
     });
   };
 
+  handleShow = () => {
+    this.setState((currentState) => {
+      // console.log(currentState.hello);
+      return {
+        hello: !currentState.hello,
+      };
+    });
+  };
+
   render() {
     const {
       homeScore,
@@ -94,6 +104,7 @@ class Game extends Component {
       visitingShots,
       // visitingShotPercentage,
       resetCounter,
+      hello,
     } = this.state;
 
     const { venue, team1, team2 } = this.props;
@@ -107,6 +118,7 @@ class Game extends Component {
         <div className="row">
           <p className="stats team">
             <Team
+              hello={hello}
               score={homeScore}
               shots={homeShots}
               shotPercentage={((homeScore / homeShots) * 100).toFixed(0)}
@@ -138,9 +150,13 @@ class Game extends Component {
             <Button onClick={this.handleReset} variant="warning">
               RESET GAME
             </Button>{" "}
+            <Button onClick={this.handleShow} variant="warning">
+              SHOW
+            </Button>{" "}
           </p>
           <p className="stats team">
             <Team
+              hello={hello}
               score={visitingScore}
               shots={visitingShots}
               shotPercentage={((visitingScore / visitingShots) * 100).toFixed(
